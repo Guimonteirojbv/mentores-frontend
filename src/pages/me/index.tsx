@@ -1,20 +1,23 @@
 import { Spinner } from '@/components/atoms/Spinner';
+import { AccountManagementTab } from '@/components/organisms/AccountPage/AccountManagementTab';
+import { DisableAccountTab } from '@/components/organisms/AccountPage/DisableAccountTab';
+import { ExcludeAccountTab } from '@/components/organisms/AccountPage/ExcludeAccount';
 import { PasswordTab } from '@/components/organisms/AccountPage/PasswordTab';
 import { PersonalInfoTab } from '@/components/organisms/AccountPage/PersonalInfoTab';
 import { ProfileTab } from '@/components/organisms/AccountPage/ProfileTab';
 import { ScheduleTab } from '@/components/organisms/AccountPage/ScheduleTab';
 import { useAuthContext } from '@/context/Auth/AuthContext';
 import { EditPhotoProvider } from '@/context/EditPhotoContext';
-import { useProtectPage } from '@/hooks/useProtectPage';
+// import { useProtectPage } from '@/hooks/useProtectPage';
 import {
   AsideContainer,
+  AsideDivider,
   AsideNavContainer,
   AsideNavItem,
   AsideTitle,
   Container,
-  AsideDivider,
-  ContentDivider,
   ContainerSpinnerLoading,
+  ContentDivider,
 } from '@/styles/pages/me';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useRouter } from 'next/router';
@@ -25,7 +28,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function MePage() {
   const { mentor } = useAuthContext();
-  const loading = useProtectPage();
+  // const loading = useProtectPage();
 
   const router = useRouter();
   const initialTab = router.query.tab as string;
@@ -40,13 +43,13 @@ export default function MePage() {
     setActiveTab(router.query.tab as string);
   }, [router.query.tab]);
 
-  if (loading) {
-    return (
-      <ContainerSpinnerLoading>
-        <Spinner className="spinner" />
-      </ContainerSpinnerLoading>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <ContainerSpinnerLoading>
+  //       <Spinner className="spinner" />
+  //     </ContainerSpinnerLoading>
+  //   );
+  // }
 
   return (
     <Tabs.Root
@@ -69,6 +72,9 @@ export default function MePage() {
               <AsideNavItem value="profile">Perfil</AsideNavItem>
               <AsideNavItem value="schedule">Agenda</AsideNavItem>
               <AsideNavItem value="password">Senha</AsideNavItem>
+              <AsideNavItem value="account-management">
+                Gestão da conta
+              </AsideNavItem>
             </AsideNavContainer>
           </AsideContainer>
 
@@ -85,6 +91,9 @@ export default function MePage() {
                 <ProfileTab />
                 <ScheduleTab />
                 <PasswordTab />
+                <AccountManagementTab />
+                <DisableAccountTab handleChangeTab={handleTabChange} />
+                <ExcludeAccountTab />
               </>
             )}
 

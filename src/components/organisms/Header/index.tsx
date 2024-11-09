@@ -1,7 +1,15 @@
 import logoImg from '@/assets/logos/sou-junior.svg';
 import { Button } from '@/components/atoms/Button';
+import { UserAvatar } from '@/components/atoms/UserAvatar';
+import { useAuthContext } from '@/context/Auth/AuthContext';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
+import UserLoginService from '@/services/user/userLoginService';
+import { breakpoints } from '@/styles/theme';
+import { Menu } from '@mui/icons-material';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import {
   ContainerHeader,
   Divider,
@@ -17,14 +25,6 @@ import {
   MenuBurgerTrigger,
   SignOutBtn,
 } from './style';
-import { UserAvatar } from '@/components/atoms/UserAvatar';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { Menu } from '@mui/icons-material';
-import { useState } from 'react';
-import { useAuthContext } from '@/context/Auth/AuthContext';
-import UserLoginService from '@/services/user/userLoginService';
-import { useBreakpoint } from '@/hooks/useBreakpoint';
-import { breakpoints } from '@/styles/theme';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,7 +51,7 @@ export function Header() {
         </div>
       </nav>
 
-      {userSession != null ? (
+      {!userSession != null ? (
         <DropdownMenu.Root
           modal={breakpoint <= breakpoints.desktopXS}
           open={isMenuOpen}
@@ -108,6 +108,7 @@ export function Header() {
       )}
 
       {/* Mobile menu */}
+
       {!userSession && (
         <DropdownMenu.Root open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <MenuBurgerTrigger>
@@ -117,32 +118,32 @@ export function Header() {
           {isMenuOpen && <MenuBurgerOverlay aria-hidden />}
 
           <DropdownMenu.Portal>
-          <MenuBurgerContent sideOffset={12}>
-            <div className="menu-burger-links">
-              <DropdownMenu.Item asChild>
-                <Link href="/#onboarding">Como Funciona</Link>
-              </DropdownMenu.Item>
+            <MenuBurgerContent sideOffset={12}>
+              <div className="menu-burger-links">
+                <DropdownMenu.Item asChild>
+                  <Link href="/#onboarding">Como Funciona</Link>
+                </DropdownMenu.Item>
 
-              <DropdownMenu.Item asChild>
-                <Link href="/#mentor">Encontre Seu Mentor</Link>
-              </DropdownMenu.Item>
-            </div>
+                <DropdownMenu.Item asChild>
+                  <Link href="/#mentor">Encontre Seu Mentor</Link>
+                </DropdownMenu.Item>
+              </div>
 
-            <Divider />
+              <Divider />
 
-            <GroupBtnMobile>
-              <DropdownMenu.Item asChild>
-                <Button as={Link} href="/login" variant="secondary">
-                  Login mentores
-                </Button>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item asChild>
-                <Button as={Link} href="/cadastro">
-                  Cadastro mentores
-                </Button>
-              </DropdownMenu.Item>
-            </GroupBtnMobile>
-          </MenuBurgerContent>
+              <GroupBtnMobile>
+                <DropdownMenu.Item asChild>
+                  <Button as={Link} href="/login" variant="secondary">
+                    Login mentores
+                  </Button>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item asChild>
+                  <Button as={Link} href="/cadastro">
+                    Cadastro mentores
+                  </Button>
+                </DropdownMenu.Item>
+              </GroupBtnMobile>
+            </MenuBurgerContent>
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       )}
