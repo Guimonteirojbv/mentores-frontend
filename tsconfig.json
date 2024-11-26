@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "preserve",
     "target": "es6",
     "lib": [
       "dom",
@@ -16,7 +17,6 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
     "incremental": true,
     "paths": {
       "@/*": [
@@ -32,5 +32,6 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "skipLibCheck": true
 }

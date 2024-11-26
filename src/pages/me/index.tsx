@@ -93,7 +93,7 @@ export default function MePage() {
                 <PasswordTab />
                 <AccountManagementTab />
                 <DisableAccountTab handleChangeTab={handleTabChange} />
-                <ExcludeAccountTab />
+                <ExcludeAccountTab handleChangeTab={handleTabChange} />
               </>
             )}
 

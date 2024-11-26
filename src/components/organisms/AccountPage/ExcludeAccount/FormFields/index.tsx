@@ -4,7 +4,17 @@ import { Select } from '@/components/atoms/Select';
 import { motivations } from '@/data/static-info';
 import { useFormikContext } from 'formik';
 import { ExcludeFormData } from '../index';
-import { FieldSet, SelectInputContainer, SelectItemStyled } from './styles';
+import {
+  FieldSet,
+  InputRadioMood,
+  LabelInputMood,
+  SelectInputContainer,
+  SelectItemStyled,
+  WrapperInputMood,
+  WrapperInputPassword,
+  WrapperMood,
+  WrapperTextArea,
+} from './styles';
 
 import mood from '@/assets/satisfaction/mood.svg';
 import moodBad from '@/assets/satisfaction/mood_bad.svg';
@@ -13,6 +23,9 @@ import extremelyDissatisfied from '@/assets/satisfaction/sentiment_extremely_dis
 import neutral from '@/assets/satisfaction/sentiment_neutral.svg';
 import sentiment_satisfied from '@/assets/satisfaction/sentiment_satisfied.svg';
 import verySatisfied from '@/assets/satisfaction/sentiment_very_satisfied.svg';
+import { InputForm } from '@/components/atoms/InputForm';
+
+import { fadeIn } from '@/styles/animations';
 
 export function FormFields() {
   const formik = useFormikContext<ExcludeFormData>();
@@ -26,12 +39,12 @@ export function FormFields() {
   ];
 
   const images = [
-    mood.src,
+    extremelyDissatisfied.src,
     moodBad.src,
     dissatisfied.src,
-    extremelyDissatisfied.src,
     neutral.src,
     sentiment_satisfied.src,
+    mood.src,
     verySatisfied.src,
   ];
 
@@ -59,6 +72,27 @@ export function FormFields() {
         </Select>
       </SelectInputContainer>
 
+      {formik.values.motivation === 'Outro' && (
+        <WrapperTextArea
+          variants={fadeIn}
+          animate={'animate'}
+          initial={'initial'}
+        >
+          <InputForm
+            type="textarea"
+            label=""
+            name="explanation"
+            maxlength="600"
+            isRequired={false}
+            placeholder="Escreva seu motivo"
+          />
+          <span>
+            {formik.values.description ? formik.values.description.length : 0}
+            /600
+          </span>
+        </WrapperTextArea>
+      )}
+
       <RadioInput
         options={options}
         label="Como você avaliaria a facilidade de uso da plataforma?"
@@ -68,20 +102,47 @@ export function FormFields() {
       <FieldSet>
         <FieldsetTitle>
           Em uma escala de 1 a 7, o quão satisfeito você estava com a
-          plataforma? *
+          plataforma? <span className="asterisk">*</span>
         </FieldsetTitle>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <WrapperMood>
           {images.map(image => (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <label for="image">
+            <WrapperInputMood>
+              <LabelInputMood htmlFor="image">
                 <img src={image} alt="" />
-              </label>
-              <input type="radio" />
-            </div>
+              </LabelInputMood>
+              <InputRadioMood
+                type="radio"
+                name="satisfacao"
+                id={image}
+                value={image}
+              />
+            </WrapperInputMood>
           ))}
-        </div>
+        </WrapperMood>
       </FieldSet>
+
+      <WrapperTextArea>
+        <InputForm
+          type="textarea"
+          label="Existe algo que você gostaria de compartilhar sobre sua experiência com a plataforma de mentores?"
+          name="explanation"
+          maxlength="600"
+        />
+        <span>0/600</span>
+      </WrapperTextArea>
+
+      <WrapperInputPassword>
+        <InputForm
+          type="input"
+          label=""
+          name="password"
+          placeholder="Senha*"
+          isRequired={false}
+        />
+
+        <span>Insira a senha para excluir sua conta</span>
+      </WrapperInputPassword>
     </>
   );
 }

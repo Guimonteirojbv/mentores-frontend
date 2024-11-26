@@ -18,6 +18,10 @@ export function AccountManagementTab() {
   function handleTabDisable() {
     router.push({ query: { tab: 'disable-account' } });
   }
+
+  function handleTabExclude() {
+    router.push({ query: { tab: 'exclude-account' } });
+  }
   return (
     <TabContainer value="account-management">
       <TitleTab>Gestão da conta</TitleTab>
@@ -42,7 +46,9 @@ export function AccountManagementTab() {
           <ButtonFullWidth textcolor="gray" onClick={handleTabDisable}>
             Desativar conta
           </ButtonFullWidth>
-          <ButtonFullWidth textcolor="red">Excluir conta</ButtonFullWidth>
+          <ButtonFullWidth textcolor="red" onClick={handleTabExclude}>
+            Excluir conta
+          </ButtonFullWidth>
         </ButtonsWrapper>
       </AccountManagementContent>
     </TabContainer>

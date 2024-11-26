@@ -27,7 +27,7 @@ export function RadioInput({
       {options.map(option => (
         <RadioWrapper>
           <InputRadio type="radio" id={option} value={option} name="opcao" />
-          <Label for={option}>{option}</Label>
+          <Label htmlFor={option}>{option}</Label>
         </RadioWrapper>
       ))}
     </Container>
